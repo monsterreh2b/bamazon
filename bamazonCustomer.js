@@ -100,12 +100,21 @@ display();
          //console.log(res);
          if (res[0].stock_quantity === 300){
              console.log("Insufficient quantity!");
-            return;
+             return;
          }else{
               var newQuantity = (res[0].stock_quantity-answer.quantity);
              console.log(newQuantity);
+connection.query("UPDATE products SET ? WHERE ?", [{
+        stock_quantity: newQuantity
+    }, {
+        item_id: answer.id
+    }], function(err,res){
+        console.log(res);
+    });
+
 
          }
+    
 
     
 
