@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+var confirm = require('inquirer-confirm');
 
  var connection = mysql.createConnection({
    host: "localhost",
@@ -80,7 +80,9 @@ display();
          return false;
      }, 
     
- }
+ },
+
+ 
 
 // // ,{
 // //     type: "confirm",
@@ -90,17 +92,35 @@ display();
 // // }
  ]).then(function(answer){
      
-     
-     connection.query("SELECT stock_quantity FROM products WHERE ?", { item_id: answer.id }, function(err,res) {
+    //  var evaluate;
+     connection.query("SELECT stock_quantity FROM products WHERE ?", { 
+         item_id: answer.id 
+     }, function(err,res) {
          if (err) throw err;
-         if (res.stock_quantity === 300){
+         //console.log(res);
+         if (res[0].stock_quantity === 300){
              console.log("Insufficient quantity!");
-             return;
+            return;
          }else{
-            console.log(res[0]);
+              var newQuantity = (res[0].stock_quantity-answer.quantity);
+             console.log(newQuantity);
+
          }
-        //  console.log(res[0]);
+
     
+
+
+        //  console.log(res[0]);
+        confirm('Do you want to inquire on another product?')
+  .then(function confirmed() {
+    display();
+   setTimeout(start, 1000);
+  }, function cancelled() {
+    connection.end(); 
+  });
+
+
+
      });
  });
  };
