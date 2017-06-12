@@ -1,24 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-// const Sequelize = require('sequelize');
-// const sequelize = new Sequelize('bamazon', 'root', 'root');
 
-// console.log('db instance', sequelize);
-// const User = sequelize.define('user', {
-//   username: Sequelize.STRING,
-//   birthday: Sequelize.DATE
-// });
-
-// sequelize.sync()
-//   .then(() => User.create({
-//     username: 'janedoe',
-//     birthday: new Date(1980, 6, 20)
-//   }))
-//   .then(jane => {
-//     console.log(jane.get({
-//       plain: true
-//     }));
-//   });
 
  var connection = mysql.createConnection({
    host: "localhost",
@@ -37,7 +19,7 @@ var inquirer = require("inquirer");
    console.log("connected as id " + connection.threadId);
   
 display();
-   start();
+   setTimeout(start, 1000);
  });
 
 // //  connection.query("INSERT INTO songs SET ?", {
@@ -107,14 +89,21 @@ display();
 // //     default: true 
 // // }
  ]).then(function(answer){
-     var query = "SELECT stock_quantity FROM products WHERE ?";
-     if (err) throw err;
-     connection.query(query, { item_id: answer.id }, function(err,res) {
-         console.log(res);
+     
+     
+     connection.query("SELECT stock_quantity FROM products WHERE ?", { item_id: answer.id }, function(err,res) {
+         if (err) throw err;
+         if (res.stock_quantity === 300){
+             console.log("Insufficient quantity!");
+             return;
+         }else{
+            console.log(res[0]);
+         }
+        //  console.log(res[0]);
     
      });
  });
  };
 
 
-// //connection.end(); put this in another inquirer question
+//connection.end(); 
