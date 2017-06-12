@@ -109,7 +109,7 @@ connection.query("UPDATE products SET ? WHERE ?", [{
     }, {
         item_id: answer.id
     }], function(err,res){
-        console.log(res);
+        //console.log(res);
         // console.log(answer.quantity);
     });
 
@@ -128,20 +128,22 @@ console.log("Your total cost for this product is: $" + answer.quantity*res[0].pr
     
 
 
-          console.log(res[0]);
-         confirm('Do you want to inquire on another product?')
-   .then(function confirmed() {
-     display();
-    setTimeout(start, 1000);
-   }, function cancelled() {
-     connection.end(); 
-   });
+        //   console.log(res[0]);
+//          confirm('Do you want to inquire on another product?')
+//    .then(function confirmed() {
+//      display();
+//     setTimeout(start, 1000);
+//    }, function cancelled() {
+//      connection.end(); 
+//    });
 
 
 
      });
  });
  };
+
+
 
 
 //connection.end(); 
